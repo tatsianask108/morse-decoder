@@ -40,20 +40,17 @@ const MORSE_TABLE = {
 
 
 function decode(expr) {
-    const chunkedCode = expr.match(/.{10}/g);
-    // console.log(chunkedCode)
-
-    const result = chunkedCode
-        .map(item => item.replace(/00/g, ''))
-        .map(item => item.replace(/10/g, '.'))
-        .map(item => item.replace(/11/g, '-'))
-        .map(item => item.replace(/\*/g, ''))
+    const chunkedExpr = expr.match(/.{10}/g)
+        .map(item => item.replaceAll('00', ''))
+        .map(item => item.replaceAll('10', '.'))
+        .map(item => item.replaceAll('11', '-'))
+        .map(item => item.replaceAll('**********', 'whatever'))
         .map(item => MORSE_TABLE[item])
+        .map(item => item === undefined ? item = ' ' : item)
         .join('')
 
-    // console.log(result)
     // return console.log(result)
-    return result;
+    return chunkedExpr;
 }
 
 // decode("000000001100101010100000000010**********00111110110000101011000000101000111011100000111011**********00111010100000101110000011111100001011110000001110**********001010111000001111110011101011**********00101111110000101011000000111100101111100000101010**********0000111111001010101100000000100000101110**********000000001100101010100000000010**********0010111010000000101100111110100011101111**********000011101000001111110000111110")
